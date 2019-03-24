@@ -19,6 +19,7 @@
   "files": [
     "dist"
   ],
+  "keywords": ["events", "listeners", "EventEmitter", "async", "TypeScript"],
   "scripts": {
     "build": "rimraf dist && run-p build:*",
     "build:node": "tsc --project tsconfig.json --declaration --declarationDir dist/types",
