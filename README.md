@@ -1,11 +1,15 @@
 # Typed Events
 
+[![Build Status](https://travis-ci.com/Jartreg/typed-events.svg?branch=master)](https://travis-ci.com/Jartreg/typed-events)
+[![Code Coverage](https://codecov.io/gh/Jartreg/typed-events/branch/master/graph/badge.svg)](https://codecov.io/gh/Jartreg/typed-events)
+![License](https://img.shields.io/github/license/jartreg/typed-events.svg)
+
 Type-safe events for TypeScript, either predefined or based on tag types
 
 ## Features
 * Type safety at compile time
 * Suggestions in editors supporting TypeScript
-* Asynchronous events
+* [Asynchronous events](#asynchronous-events)
 
 ## Usage
 
@@ -84,7 +88,7 @@ const StringEvent = "some-event" as EventType<(arg: string) => Promise<void> | v
 const bus = new EventBus();
 
 // A listener expecting a function
-bus.on(NumberEvent, (cb: () => void)) => {
+bus.on(FunctionEvent, (cb: () => void)) => {
     // something...
     cb();
 });
