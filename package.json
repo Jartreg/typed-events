@@ -5,7 +5,7 @@
   "author": "Jartreg",
   "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "module": "dist/module/index.js",
   "sideEffects": false,
   "repository": {
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && run-p build:*",
-    "build:node": "tsc --project tsconfig.json --declaration",
+    "build:node": "tsc --project tsconfig.json --declaration --declarationDir dist/types",
     "build:module": "tsc --project tsconfig.json --outDir dist/module --module esnext",
     "lint": "tslint --config tslint.json --project tsconfig.json",
     "test": "jest --coverage"
