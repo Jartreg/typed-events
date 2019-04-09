@@ -1,4 +1,4 @@
-type AnyListener = (...args: any[]) => void | Promise<void>;
+import { AnyListener } from "./common-types";
 
 export interface IEventEmitter<TEvents extends {[event: string]: AnyListener}> {
     /**

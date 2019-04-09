@@ -1,4 +1,4 @@
-type AnyListener = (...args: any[]) => void | Promise<void>;
+import { AnyListener } from "./common-types";
 
 export type EventType<T extends AnyListener> = string & { __tag: T };
 
