@@ -1,4 +1,5 @@
 import { AnyListener } from "./common-types";
+import { EventEmitterImpl } from "./implementation";
 
 export interface IEventEmitter<TEvents extends {[event: string]: AnyListener}> {
     /**
@@ -43,52 +44,5 @@ export interface IEventEmitter<TEvents extends {[event: string]: AnyListener}> {
     emitAsync<E extends keyof TEvents>(event: E, ...args: Parameters<TEvents[E]>): Promise<void>;
 }
 
-export class EventEmitter<TEvents extends {[event: string]: AnyListener}> implements IEventEmitter<TEvents> {
-    private readonly listeners: { [E in keyof TEvents]?: Array<TEvents[E]> } = {};
-
-    on<E extends keyof TEvents>(event: E, listener: TEvents[E]) {
-        const listeners: Array<TEvents[E]> | undefined = this.listeners[event];
-        (listeners || (this.listeners[event] = [])).push(listener);
-    }
-
-    once<E extends keyof TEvents>(event: E, listener: TEvents[E]) {
-        const onceListener = ((...args: Parameters<TEvents[E]>) => {
-            this.off(event, onceListener);
-            listener(...args);
-        }) as TEvents[E];
-
-        this.on(event, onceListener);
-    }
-
-    off<E extends keyof TEvents>(event: E, listener: TEvents[E]) {
-        const listeners = this.listeners[event];
-        if (listeners) {
-            const i = listeners.indexOf(listener);
-
-            if (i !== -1) {
-                listeners.splice(i, 1);
-            }
-        }
-    }
-
-    getListeners<E extends keyof TEvents>(event: E): Array<TEvents[E]> {
-        const listeners: Array<TEvents[E]> | undefined = this.listeners[event];
-        return listeners || [];
-    }
-
-    emit<E extends keyof TEvents>(event: E, ...args: Parameters<TEvents[E]>) {
-        const listeners: Array<TEvents[E]> | undefined = this.listeners[event];
-        if (listeners) {
-            listeners.forEach((listener) => listener(...args));
-        }
-    }
-
-    emitAsync<E extends keyof TEvents>(event: E, ...args: Parameters<TEvents[E]>): Promise<void> {
-        const listeners: Array<TEvents[E]> | undefined = this.listeners[event];
-        if (listeners && listeners.length !== 0) {
-            return Promise.all(listeners.map((listener) => listener(...args))) as any;
-        }
-
-        return Promise.resolve();
-    }
-}
+export const EventEmitter = EventEmitterImpl as
+    new <TEvents extends {[event: string]: AnyListener}>() => IEventEmitter<TEvents>;

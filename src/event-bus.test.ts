@@ -1,9 +1,9 @@
-import { EventBus, EventType } from "./event-bus";
+import { EventBus, EventType, IEventBus } from "./event-bus";
 import { createPromise, testPromiseResolved, testPromiseResolving } from "./test/util";
 
 const TestEvent = "test" as EventType<(a: string, b: string) => Promise<void> | void>;
 
-let emitter: EventBus;
+let emitter: IEventBus;
 let listener: jest.Mock<Promise<void> | void, [string, string]>;
 
 beforeAll(() => {

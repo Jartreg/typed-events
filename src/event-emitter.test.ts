@@ -1,5 +1,5 @@
-import { EventEmitter } from "./event-emitter";
-import { createPromise, testPromiseResolving, testPromiseResolved } from "./test/util";
+import { EventEmitter, IEventEmitter } from "./event-emitter";
+import { createPromise, testPromiseResolved, testPromiseResolving } from "./test/util";
 
 // It is necessary to use a type literal here, because we would otherwise get a compiler error
 // tslint:disable-next-line: interface-over-type-literal
@@ -7,7 +7,7 @@ type TestEvents = {
     "test": (a: string, b: string) => Promise<void> | void;
 };
 
-let emitter: EventEmitter<TestEvents>;
+let emitter: IEventEmitter<TestEvents>;
 let listener: jest.Mock<Promise<void> | void, [string, string]>;
 
 beforeAll(() => {
