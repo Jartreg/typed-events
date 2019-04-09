@@ -1,4 +1,5 @@
-type AnyListener = (...args: any[]) => void | Promise<void>;
+import { AnyListener } from "./common-types";
+import { EventEmitterImpl } from "./implementation";
 
 export type EventType<T extends AnyListener> = string & { __tag: T };
 
@@ -45,52 +46,4 @@ export interface IEventBus {
     emitAsync<T extends AnyListener>(event: EventType<T>, ...args: Parameters<T>): Promise<void>;
 }
 
-export class EventBus implements IEventBus {
-    private readonly listeners: { [event: string]: AnyListener[] } = {};
-
-    on<T extends AnyListener>(event: EventType<T>, listener: T) {
-        const listeners = this.listeners[event] as T[] | undefined;
-        (listeners || (this.listeners[event] = [])).push(listener);
-    }
-
-    once<T extends AnyListener>(event: EventType<T>, listener: T) {
-        const onceListener = ((...args: Parameters<T>) => {
-            this.off(event, onceListener);
-            listener(...args);
-        }) as T;
-
-        this.on(event, onceListener);
-    }
-
-    off<T extends AnyListener>(event: EventType<T>, listener: T) {
-        const listeners = this.listeners[event];
-        if (listeners) {
-            const i = listeners.indexOf(listener);
-
-            if (i !== -1) {
-                listeners.splice(i, 1);
-            }
-        }
-    }
-
-    getListeners<T extends AnyListener>(event: EventType<T>): T[] {
-        const listeners = this.listeners[event] as T[] | undefined;
-        return listeners || [];
-    }
-
-    emit<T extends AnyListener>(event: EventType<T>, ...args: Parameters<T>) {
-        const listeners = this.listeners[event] as T[] | undefined;
-        if (listeners) {
-            listeners.forEach((listener) => listener(...args));
-        }
-    }
-
-    emitAsync<T extends AnyListener>(event: EventType<T>, ...args: Parameters<T>): Promise<void> {
-        const listeners = this.listeners[event] as T[] | undefined;
-        if (listeners && listeners.length !== 0) {
-            return Promise.all(listeners.map((listener) => listener(...args))) as any;
-        }
-
-        return Promise.resolve();
-    }
-}
+export const EventBus = EventEmitterImpl as new () => IEventBus;
