@@ -17,9 +17,22 @@ test("unused events should return an empty array", () => {
     expect(emitter.getListeners("test-event")).toEqual([]);
 });
 
+test("emiting unused events", async () => {
+    emitter.emit("test-event");
+    await emitter.emitAsync("test-event");
+});
+
+test("removing listeners from unused events", () => {
+    emitter.off("test-event", () => undefined);
+});
+
 test("adding listeners", () => {
     emitter.on("test-event", listener);
     expect(emitter.getListeners("test-event")).toEqual([listener]);
+});
+
+test("removing listeners that have never been added", () => {
+    emitter.off("test-event", () => undefined);
 });
 
 test("emitting events", () => {

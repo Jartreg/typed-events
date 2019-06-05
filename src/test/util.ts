@@ -1,15 +1,13 @@
 export function createPromise<T>(): Promise<[Promise<T>, (result: T) => void, (error?: Error) => void]> {
     return new Promise((resolve) => {
         const promise = new Promise<T>((resolveFn, rejectFn) => {
-            setImmediate(() => {
-                resolve([promise, (result: T) => resolveFn(result), rejectFn]);
-            });
+            resolve([promise, (result: T) => resolveFn(result), rejectFn]);
         });
     });
 }
 
 export function immediate(): Promise<void> {
-    return new Promise((resolve) => setImmediate(resolve));
+    return Promise.resolve();
 }
 
 export async function testPromiseResolved(promise: Promise<any>) {
