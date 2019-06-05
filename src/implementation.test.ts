@@ -76,3 +76,29 @@ test("listening once", () => {
     emitter.emit("test-event", "a", "b");
     expect(listener).not.toBeCalled();
 });
+
+test("removing listeners during execution should have no immediate effect", () => {
+    emitter.on("test-event", () => {
+        emitter.off("test-event", listener);
+    });
+
+    emitter.on("test-event", listener);
+
+    emitter.emit("test-event", "a", "b");
+    expect(listener).toBeCalled();
+
+    listener.mockReset();
+    emitter.emit("test-event", "a", "b");
+    expect(listener).not.toBeCalled();
+});
+
+test("removing listeners during async execution should have no immediate effect", async () => {
+    emitter.on("test-event", listener);
+
+    await emitter.emitAsync("test-event", "a", "b");
+    expect(listener).toBeCalled();
+
+    listener.mockReset();
+    await emitter.emitAsync("test-event", "a", "b");
+    expect(listener).not.toBeCalled();
+});

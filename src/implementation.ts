@@ -30,19 +30,19 @@ export class EventEmitterImpl {
 
     getListeners(event: string): AnyListener[] {
         const listeners: AnyListener[] | undefined = this.listeners[event];
-        return listeners || [];
+        return listeners ? [...listeners] : [];
     }
 
     emit(event: string, ...args: any[]) {
-        const listeners: AnyListener[] | undefined = this.listeners[event];
-        if (listeners) {
+        const listeners: AnyListener[] | undefined = this.getListeners(event);
+        if (listeners.length !== 0) {
             listeners.forEach((listener) => listener(...args));
         }
     }
 
     emitAsync(event: string, ...args: any[]): Promise<void> {
-        const listeners: AnyListener[] | undefined = this.listeners[event];
-        if (listeners && listeners.length !== 0) {
+        const listeners: AnyListener[] | undefined = this.getListeners(event);
+        if (listeners.length !== 0) {
             return Promise.all(listeners.map((listener) => listener(...args))) as any;
         }
 
