@@ -119,7 +119,7 @@ await emitter.emitAsync("some-event");
 ```
 
 ### Removing listeners
-Listeners can be removed by either using `off` or or the function returned by `on` and `once`:
+Listeners can be removed by either using `off` or or the function returned by `on` and `once`.
 
 Using `off`:
 ```typescript
