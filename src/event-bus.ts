@@ -8,15 +8,17 @@ export interface IEventBus {
      * Adds an event listener
      * @param event the event to listen to
      * @param listener the listener to add
+     * @returns a callback that removes the listener
      */
-    on<T extends AnyListener>(event: EventType<T>, listener: T): void;
+    on<T extends AnyListener>(event: EventType<T>, listener: T): () => void;
 
     /**
      * Adds an event listener that will only be called once
      * @param event the event to listen to
      * @param listener the listener to add
+     * @returns a callback that removes the listener
      */
-    once<T extends AnyListener>(event: EventType<T>, listener: T): void;
+    once<T extends AnyListener>(event: EventType<T>, listener: T): () => void;
 
     /**
      * Removes an event listener

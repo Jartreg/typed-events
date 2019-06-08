@@ -6,15 +6,17 @@ export interface IEventEmitter<TEvents extends {[event: string]: AnyListener}> {
      * Adds an event listener
      * @param event the event to listen to
      * @param listener the listener to add
+     * @returns a callback that removes the listener
      */
-    on<E extends keyof TEvents>(event: E, listener: TEvents[E]): void;
+    on<E extends keyof TEvents>(event: E, listener: TEvents[E]): () => void;
 
     /**
      * Adds an event listener that will only be called once
      * @param event the event to listen to
      * @param listener the listener to add
+     * @returns a callback that removes the listener
      */
-    once<E extends keyof TEvents>(event: E, listener: TEvents[E]): void;
+    once<E extends keyof TEvents>(event: E, listener: TEvents[E]): () => void;
 
     /**
      * Removes an event listener

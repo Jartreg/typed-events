@@ -3,18 +3,20 @@ import { AnyListener } from "./common-types";
 export class EventEmitterImpl {
     private readonly listeners: { [event: string]: undefined | AnyListener[] } = {};
 
-    on(event: string, listener: AnyListener) {
+    on(event: string, listener: AnyListener): () => void {
         const listeners: AnyListener[] | undefined = this.listeners[event];
         (listeners || (this.listeners[event] = [])).push(listener);
+
+        return () => this.off(event, listener);
     }
 
-    once(event: string, listener: AnyListener) {
+    once(event: string, listener: AnyListener): () => void {
         const onceListener = ((...args: any[]) => {
             this.off(event, onceListener);
             return listener(...args);
         });
 
-        this.on(event, onceListener);
+        return this.on(event, onceListener);
     }
 
     off(event: string, listener: AnyListener) {

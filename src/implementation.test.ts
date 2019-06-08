@@ -77,6 +77,22 @@ test("listening once", () => {
     expect(listener).not.toBeCalled();
 });
 
+test("removing listeners using the returned callback", () => {
+    const remove = emitter.on("test-event", listener);
+    expect(emitter.getListeners("test-event")).toEqual([listener]);
+
+    remove();
+    expect(emitter.getListeners("test-event")).toEqual([]);
+});
+
+test("removing listeners added with once(...) using the returned callback", () => {
+    const remove = emitter.once("test-event", listener);
+    expect(emitter.getListeners("test-event").length).toBe(1);
+
+    remove();
+    expect(emitter.getListeners("test-event")).toEqual([]);
+});
+
 test("removing listeners during execution should have no immediate effect", () => {
     emitter.on("test-event", () => {
         emitter.off("test-event", listener);
