@@ -1,6 +1,6 @@
 # Typed Events
 
-[![Build Status](https://travis-ci.com/Jartreg/typed-events.svg?branch=master)](https://travis-ci.com/Jartreg/typed-events)
+[![CI](https://github.com/Jartreg/typed-events/workflows/CI/badge.svg)](https://github.com/Jartreg/typed-events/actions?query=workflow%3ACI)
 [![Code Coverage](https://codecov.io/gh/Jartreg/typed-events/branch/master/graph/badge.svg)](https://codecov.io/gh/Jartreg/typed-events)
 ![License](https://img.shields.io/github/license/jartreg/typed-events.svg)
 
