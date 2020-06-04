@@ -10,7 +10,7 @@ export function immediate(): Promise<void> {
     return Promise.resolve();
 }
 
-export async function testPromiseResolved(promise: Promise<any>) {
+export async function testPromiseResolved(promise: Promise<any>): Promise<void> {
     const callback = jest.fn();
     promise.then(callback);
 

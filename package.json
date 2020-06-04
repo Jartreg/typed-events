@@ -19,12 +19,18 @@
   "files": [
     "dist"
   ],
-  "keywords": ["events", "listeners", "EventEmitter", "async", "TypeScript"],
+  "keywords": [
+    "events",
+    "listeners",
+    "EventEmitter",
+    "async",
+    "TypeScript"
+  ],
   "scripts": {
     "build": "rimraf dist && run-p build:*",
     "build:node": "tsc --project tsconfig.json --declaration --declarationDir dist/types",
     "build:module": "tsc --project tsconfig.json --outDir dist/module --module esnext",
-    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "lint": "eslint . --ext .ts",
     "test": "jest --coverage"
   },
   "jest": {
@@ -38,12 +44,14 @@
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
+    "eslint": "^7.1.0",
     "husky": "^4.0.0",
     "jest": "^25.1.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.0",
     "ts-jest": "^25.0.0",
-    "tslint": "^6.0.0",
     "typescript": "^3.6.2"
   }
 }

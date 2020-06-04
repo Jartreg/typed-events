@@ -19,7 +19,7 @@ export class EventEmitterImpl {
         return this.on(event, onceListener);
     }
 
-    off(event: string, listener: AnyListener) {
+    off(event: string, listener: AnyListener): void {
         const listeners = this.listeners[event];
         if (listeners) {
             const i = listeners.indexOf(listener);
@@ -35,7 +35,7 @@ export class EventEmitterImpl {
         return listeners ? [...listeners] : [];
     }
 
-    emit(event: string, ...args: any[]) {
+    emit(event: string, ...args: any[]): void {
         const listeners: AnyListener[] | undefined = this.getListeners(event);
         if (listeners.length !== 0) {
             listeners.forEach((listener) => listener(...args));
