@@ -30,8 +30,10 @@
     "build": "rimraf dist && run-p build:*",
     "build:node": "tsc --project tsconfig.json --declaration --declarationDir dist/types",
     "build:module": "tsc --project tsconfig.json --outDir dist/module --module esnext",
+    "test": "jest --coverage",
     "lint": "eslint . --ext .ts",
-    "test": "jest --coverage"
+    "lint:fmt": "prettier --check \"**/*\"",
+    "prettier": "prettier --write \"**/*\""
   },
   "jest": {
     "preset": "ts-jest",
@@ -47,5 +49,8 @@
     "rimraf": "^3.0.0",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "prettier": "^2.2.1"
   }
 }

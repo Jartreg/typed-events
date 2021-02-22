@@ -1,0 +1,11 @@
+
+# unsupported files
+.editorconfig
+.prettierignore
+.eslintignore
+.gitignore
+
+# from .gitignore
+node_modules
+coverage
+dist
